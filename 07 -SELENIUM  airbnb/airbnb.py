@@ -15,9 +15,6 @@ navegador.get('https://www.airbnb.com')
 
 sleep(2)
 
-
-site = BeautifulSoup(navegador.page_source, 'html.parser')
-
 wait = WebDriverWait(navegador, 10)
 campo_busca = wait.until(EC.element_to_be_clickable((By.ID, "bigsearch-query-location-input")))
 
@@ -48,3 +45,19 @@ search_button.click()
 
 sleep(5)
 
+site = BeautifulSoup(navegador.page_source, 'html.parser')
+
+listings = site.find_all('div', {'data-testid': 'property-card'})
+for listing in listings:
+
+    titulo = listing.find('div', {'data-testid': 'listing-card-title'})
+    titulo_texto = titulo.get_text(strip=True) if titulo else 'Título não encontrado'
+
+    descricao = listing.find('span', {'data-testid': 'listing-card-name'})  
+    descricao_texto = descricao.get_text(strip=True) if descricao else 'Descrição não encontrada'
+
+    preco = listing.find('span', {'class': '_1qgfaxb1'})  
+    preco_texto = preco.get_text(strip=True) if preco else 'Preço não encontrado'
+
+    print(f"Título: {titulo_texto}")
+    
