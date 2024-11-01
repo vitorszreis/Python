@@ -47,17 +47,19 @@ sleep(5)
 
 site = BeautifulSoup(navegador.page_source, 'html.parser')
 
-listings = site.find_all('div', {'data-testid': 'property-card'})
+listings = site.find_all('div', {'class': 'g1qv1ctd'})
 for listing in listings:
 
     titulo = listing.find('div', {'data-testid': 'listing-card-title'})
     titulo_texto = titulo.get_text(strip=True) if titulo else 'Título não encontrado'
 
-    descricao = listing.find('span', {'data-testid': 'listing-card-name'})  
+    descricao = listing.find('div', {'data-testid': 'listing-card-subtitle'})  
     descricao_texto = descricao.get_text(strip=True) if descricao else 'Descrição não encontrada'
 
-    preco = listing.find('span', {'class': '_1qgfaxb1'})  
+    preco = listing.find('span', {'class': '_11jcbg2'})  
     preco_texto = preco.get_text(strip=True) if preco else 'Preço não encontrado'
 
     print(f"Título: {titulo_texto}")
-    
+    print(f"Descrição: {descricao_texto}")
+    print(f"Preço por noite: {preco_texto}")
+    print("----------")
